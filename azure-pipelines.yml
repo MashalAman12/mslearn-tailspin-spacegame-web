@@ -59,7 +59,8 @@ stages:
          azureSubscription: 'Visual Studio Enterprise Subscription – MPN(44226387-1530-405a-9950-c4376a3e23a4)'
          appType: 'webApp'
          WebAppName: 'MashalWebAppAndSQL'
-         packageForLinux: '$(System..ArtifactsDirectory)/**/*.zip'
+         packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
   
      - task: PublishBuildArtifacts@1
  
