@@ -57,5 +57,5 @@ stages:
          appType: 'webApp'
          WebAppName: 'MashalWebAppAndSQL'
          packageForLinux: '$(System..ArtifactsDirectory)/**/*.zip'
-    
+     - task: PublishBuildArtifacts@1
  
