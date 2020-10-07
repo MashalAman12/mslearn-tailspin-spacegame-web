@@ -31,9 +31,31 @@ stages:
         msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-
-    - task: VSTest@2
+      
+    - task: PublishBuildArtifacts@1
       inputs:
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+- stage: Deploy
+  jobs:
+   - job: Deploy
+     pool:
+       vmImage: 'vs2017-win2016'
+     steps:
+     - task: DownloadBuildArtifacts@0
+       inputs:
+         buildType: 'current'
+         downloadType: 'specific'
+         downloadPath: '$(System.ArtifactsDirectory)'
+         artifactName: 'drop'
+     - task: AzureRmWebAppDeployment@4
+       inputs:
+         ConnectionType: 'AzureRM'
+         azureSubscription: 'Visual Studio Enterprise Subscription – MPN(44226387-1530-405a-9950-c4376a3e23a4)'
+         appType: 'webApp'
+         WebAppName: 'MashalWebAppAndSQL'
+         packageForLinux: '$(System..ArtifactsDirectory)/**/*.zip'
     
+ 
