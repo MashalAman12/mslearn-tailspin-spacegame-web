@@ -37,6 +37,8 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+        
+    - task: PublishBuildArtifacts@1
 
 - stage: Deploy
   jobs:
@@ -57,5 +59,6 @@ stages:
          appType: 'webApp'
          WebAppName: 'MashalWebAppAndSQL'
          packageForLinux: '$(System..ArtifactsDirectory)/**/*.zip'
+  
      - task: PublishBuildArtifacts@1
  
